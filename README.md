@@ -19,7 +19,6 @@
 
 ## 📊 Architecture Overview
 
-_Add your diagram here:_  
 ![CPU RCA Diagram](diagrams/cpu-rca-architecture.png)
 
 ---
