@@ -1,8 +1,3 @@
-# 🚀 SQL Server CPU Saturation RCA
-### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
-
----
-
 ## Enterprise SQL Server Reliability Engineering Platform
 
 **Author:** Louis Achungo  
@@ -10,6 +5,11 @@
 **Portfolio:** https://sql-it-techsolutions.com/  
 **LinkedIn:** https://www.linkedin.com/in/louis-achungo/  
 **GitHub:** https://github.com/lachungo  
+
+---
+
+# 🚀 SQL Server CPU Saturation RCA
+### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
 
 ---
 
