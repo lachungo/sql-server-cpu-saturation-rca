@@ -1,4 +1,3 @@
----
 
 ### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
 
