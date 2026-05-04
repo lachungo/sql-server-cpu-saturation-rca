@@ -1,4 +1,3 @@
-## Enterprise SQL Server Reliability Engineering Platform
 
 **Author:** Louis Achungo  
 **Title:** Principal SQL Architect & Cloud DBA (Azure | AWS)  
@@ -8,7 +7,6 @@
 
 ---
 
-# 🚀 SQL Server CPU Saturation RCA
 ### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
 
 ---
