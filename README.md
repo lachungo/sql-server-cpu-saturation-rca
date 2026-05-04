@@ -1,4 +1,4 @@
-# 🚀 SQL Server CPU Saturation RCA
+# SQL Server CPU Saturation RCA
 ### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
 
 ---
