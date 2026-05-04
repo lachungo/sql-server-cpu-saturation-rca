@@ -1,13 +1,14 @@
+---
+
+### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
+
+---
 
 **Author:** Louis Achungo  
 **Title:** Principal SQL Architect & Cloud DBA (Azure | AWS)  
 **Portfolio:** https://sql-it-techsolutions.com/  
 **LinkedIn:** https://www.linkedin.com/in/louis-achungo/  
 **GitHub:** https://github.com/lachungo  
-
----
-
-### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
 
 ---
 
