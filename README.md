@@ -15,16 +15,6 @@ The objective was to identify the root cause of sustained CPU saturation and imp
 
 ---
 
-## Enterprise SQL Server Reliability Engineering Platform
-
-**Author:** Louis Achungo  
-**Title:** Principal SQL Architect & Cloud DBA (Azure | AWS)  
-**Portfolio:** https://sql-it-techsolutions.com/  
-**LinkedIn:** https://www.linkedin.com/in/louis-achungo/  
-**GitHub:** https://github.com/lachungo  
-
----
-
 ## 🧠 Philosophy
 
 > Don’t guess. Measure → Correlate → Prove → Act.
