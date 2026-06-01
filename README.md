@@ -1,5 +1,15 @@
 # SQL Server CPU Saturation RCA
-### Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
+
+Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
+
+![SQL Server](https://img.shields.io/badge/SQL_Server-2022-red)
+![Azure](https://img.shields.io/badge/Azure-VMs-blue)
+![Always On](https://img.shields.io/badge/Always_On-Availability_Groups-green)
+![Query Store](https://img.shields.io/badge/Query_Store-Enabled-orange)
+![Wait Statistics](https://img.shields.io/badge/Wait_Statistics-RCA-purple)
+![Performance Engineering](https://img.shields.io/badge/Performance-Engineering-success)
+![Root Cause Analysis](https://img.shields.io/badge/Root_Cause-Analysis-informational)
+![Production Proven](https://img.shields.io/badge/Production-Proven-brightgreen)
 
 ---
 
