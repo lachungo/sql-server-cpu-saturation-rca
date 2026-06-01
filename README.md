@@ -25,6 +25,14 @@ The objective was to identify the root cause of sustained CPU saturation and imp
 
 ---
 
+## Business Impact
+
+- Identified root cause of sustained CPU saturation
+- Avoided unnecessary infrastructure changes
+- Enabled evidence-based capacity planning
+- Improved reporting workload performance
+- Preserved Always On availability throughout remediation
+
 ## 🧠 Philosophy
 
 > Don’t guess. Measure → Correlate → Prove → Act.
@@ -53,14 +61,6 @@ This is the difference between:
 ✅ Performance engineering  
 
 ---
-
-## Business Impact
-
-- Identified root cause of sustained CPU saturation
-- Avoided unnecessary infrastructure changes
-- Enabled evidence-based capacity planning
-- Improved reporting workload performance
-- Preserved Always On availability throughout remediation
 
 ## 🔍 Problem Statement
 
