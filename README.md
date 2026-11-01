@@ -216,3 +216,10 @@ Use this approach when:
 ---
 
 ⭐ If this helped, consider starring the repo.
+
+---
+
+**Louis Achungo**  
+Principal SQL Server Architect | Performance Engineering | HA/DR | Azure SQL & AWS
+
+*Building reliable, observable, and scalable database platforms through architecture, automation, and operational excellence.*
