@@ -13,6 +13,9 @@ Diagnosing Scheduler Pressure in Always On & High-Concurrency Environments
 
 ---
 
+> [!WARNING]
+> This repository documents a specific production case and provides diagnostic examples for controlled evaluation. Review permissions, SQL Server compatibility, and workload impact before running queries. Capacity changes and Availability Group operations require environment-specific planning, testing, and recovery procedures.
+
 ## 🏢 Case Study: Enterprise SQL Server Performance Engineering
 
 This project is based on a real-world production scenario involving:
@@ -47,7 +50,7 @@ The objective was to identify the root cause of sustained CPU saturation and imp
 
 ## ⚡ Why This Matters
 
-Most CPU issues are misdiagnosed.
+High CPU requires correlated evidence to distinguish inefficient execution from capacity pressure.
 
 This playbook demonstrates how to:
 
@@ -70,7 +73,7 @@ High CPU in SQL Server is often misdiagnosed as:
 - Missing indexes  
 - General performance issues  
 
-In enterprise environments, the real issue is often:
+One condition to investigate under concurrent workloads is:
 
 > 🔥 CPU Scheduler Pressure under concurrent workloads
 
@@ -78,11 +81,12 @@ In enterprise environments, the real issue is often:
 
 ## ⚠️ Key Signals
 
-| Signal | Meaning |
-|------|--------|
-| SOS_SCHEDULER_YIELD | Workers yielding CPU time |
-| High Runnable Tasks | CPU queue saturation |
-| Low waits elsewhere | CPU is primary bottleneck |
+| Signal | Interpretation |
+|---|---|
+| SOS_SCHEDULER_YIELD | Workers voluntarily yielding the scheduler; not proof of CPU saturation by itself |
+| Persistently elevated runnable tasks | Tasks waiting for scheduler CPU time; correlate with CPU utilization over the same interval |
+| Sustained high SQL Server CPU | Supports CPU pressure when correlated with runnable queues and workload evidence |
+| Limited competing resource waits | Helps narrow the investigation but does not independently establish root cause |
 
 ---
 
@@ -95,6 +99,7 @@ SELECT TOP 10 wait_type, wait_time_ms
 FROM sys.dm_os_wait_stats
 ORDER BY wait_time_ms DESC;
 ```
+These counters are cumulative since instance startup or the last wait-statistics reset. Capture interval deltas during the incident; lifetime totals alone do not describe the incident window.
 
 ### 2. Scheduler Pressure
 
@@ -106,11 +111,35 @@ WHERE status = 'VISIBLE ONLINE';
 
 ### 3. CPU Utilization
 
+Extract recent scheduler-monitor CPU samples from the ring-buffer XML:
+
 ```sql
-SELECT SQLProcessUtilization, SystemIdle
-FROM sys.dm_os_ring_buffers
-WHERE ring_buffer_type = 'RING_BUFFER_SCHEDULER_MONITOR';
+;WITH CpuSamples AS
+(
+    SELECT
+        [timestamp],
+        TRY_CONVERT(xml, record) AS RecordXml
+    FROM sys.dm_os_ring_buffers
+    WHERE ring_buffer_type = N'RING_BUFFER_SCHEDULER_MONITOR'
+)
+SELECT TOP (30)
+    [timestamp] AS SampleTimestampMs,
+    RecordXml.value(
+        '(/Record/SchedulerMonitorEvent/SystemHealth/ProcessUtilization)[1]',
+        'int'
+    ) AS SQLProcessUtilization,
+    RecordXml.value(
+        '(/Record/SchedulerMonitorEvent/SystemHealth/SystemIdle)[1]',
+        'int'
+    ) AS SystemIdle
+FROM CpuSamples
+WHERE RecordXml.exist(
+    '/Record/SchedulerMonitorEvent/SystemHealth'
+) = 1
+ORDER BY [timestamp] DESC;
 ```
+
+Use these samples as supporting evidence and corroborate with operating-system or Azure VM CPU monitoring.
 
 ### 4. Rule Out Other Bottlenecks
 
@@ -122,13 +151,14 @@ WHERE ring_buffer_type = 'RING_BUFFER_SCHEDULER_MONITOR';
 
 ## 🔥 Root Cause Identification
 
-CPU saturation occurs when:
+The investigation identified CPU capacity pressure under concurrent reporting workloads, supported by:
 
-- Workers exceed scheduler capacity  
-- Runnable queue builds up  
-- CPU cannot service requests fast enough  
+- Sustained high SQL Server CPU utilization
+- Persistently elevated runnable queues
+- Correlated workload and wait-statistics evidence
+- Evaluation of competing bottlenecks
 
-👉 The system is not blocked… it is overwhelmed
+Scheduler pressure describes the observed condition. Query efficiency, concurrency, parallelism, and available CPU capacity must be evaluated to explain why it occurred.
 
 ---
 
@@ -136,7 +166,7 @@ CPU saturation occurs when:
 
 - Built capacity model  
 - Scaled vCPU resources  
-- Executed rolling upgrade across AG replicas  
+- Executed coordinated VM resizing across AG replicas
 - Validated post-change metrics  
 
 ---
